@@ -97,6 +97,7 @@
 .container .info span .fa {
   color: #EF3B3A;
 }
+
 body {
   background: #ffc107; /* fallback for old browsers */
   background: linear-gradient(90deg, rgb(255, 193, 7) 0%, rgb(255, 193, 7) 50%);
@@ -105,28 +106,54 @@ body {
   -moz-osx-font-smoothing: grayscale;      
 }
     </style>
-    <script>
-        $('.message a').click(function(){
-   $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
-});
+<script>
+function validateform() {
+  var username = document.lform.uname.value;
+  var password = document.lform.pass.value;
+  let regUser = /^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$/;
+let passPattern=/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+  if (username == "") {
+      alert("Username required");
+      document.getElementById("uname").focus();
+      return false;
+  }
+  else if (!regUser.test(username)) {
+      alert('Username can only use letters,numbers, minimum length is 8 characters')
+      document.getElementById("uname").focus();
+
+      return false;
+
+  }
+  else if (password == "") {
+      alert("Password required");
+      document.getElementById("pass").focus();
+      return false;
+  }
+
+  else if (!passPattern.test(password)) {
+      alert('Minimum eight characters, at least one letter, one number and one special character')
+      document.getElementById("pass").focus();
+
+      return false;
+
+  }
+  return true;
+}
+   
     </script>
 </head>
 <body>
     <div class="login-page">
         <div class="form">
-          <form class="register-form">
-            <input type="text" placeholder="name"/>
-            <input type="password" placeholder="password"/>
-            <input type="text" placeholder="email address"/>
-            <button>create</button>
-            <p class="message">Already registered? <a href="#">Sign In</a></p>
-          </form>
-          <form class="login-form">
-            <input type="text" placeholder="username"/>
-            <input type="password" placeholder="password"/>
+          
+          <form class="login-form" name="lform" method="post" onsubmit=" return validateform()">
+            <input type="text" placeholder="username" id="uname" name="uname"/>
+            <input type="password" placeholder="password" id="pass" name="pass"/>
             <button>login</button>
-            <p class="message">Not registered? <a href="#">Create an account</a></p>
           </form>
+          <p class="message">Not registered? <a href="register.html">Create an account</a></p>
+
         </div>
       </div>
     
